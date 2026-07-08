@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "House Price Prediction",
+    "image": "/images/project1.jpg",
+    "description": "Built a regression model to predict house prices using Python and Scikit-learn.",
+    "github": "https://github.com/yourusername/house-price",
+    "category": "Machine Learning"
+  },
+  {
+    "id": 2,
+    "title": "Customer Churn Analysis",
+    "image": "/images/project2.jpg",
+    "description": "Analyzed telecom dataset to predict customer churn using classification models.",
+    "github": "https://github.com/yourusername/churn-analysis",
+    "category": "Data Analytics"
+  }
+]

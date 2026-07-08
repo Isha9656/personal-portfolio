@@ -1,0 +1,275 @@
+{
+  "heroData": {
+    "homeOneHero": {
+      "bgImgLink": "/images/background/hero-bg17.jpg",
+      "imgLink": "/images/profile-pic.jpeg",
+      "title": "Isha <br /> Kakadiya",
+      "subTitle": "Hello, I’m",
+      "designation": "Machine Learning & AI Enthusiast"
+    }
+  },
+  "aboutData": {
+    "imgLink": "/images/profile-pic.jpeg",
+    "cvPdf": "/images/Resume.pdf",
+    "title": "Hi There! I'm Isha Kakadiya",
+    "subtitle": "Machine Learning & AI Enthusiast | Building Intelligent Systems",
+    "text": "Machine Learning and Deep Learning enthusiast with experience in building scalable ML pipelines, predictive analytics solutions, and data-driven applications using live operational data. Skilled in statistical analysis, feature engineering, forecasting, and end-to-end data engineering. I love solving complex data challenges and turning raw information into actionable business insights.",
+    "details": [
+      {
+        "title": "Role",
+        "info": "Data Science / ML Intern"
+      },
+      {
+        "title": "Email",
+        "info": "ikakadiya36@gmail.com"
+      },
+      {
+        "title": "From",
+        "info": "Gujarat, India"
+      },
+      {
+        "title": "Language",
+        "info": "English, Hindi, Gujarati"
+      },
+      {
+        "title": "GitHub",
+        "info": "github.com/Isha9656?tab=repositories"
+      },
+      {
+        "title": "LinkedIn",
+        "info": "linkedin.com/in/isha-kakadiya/"
+      }
+    ]
+  },
+  "skillData": {
+    "title": "Core Technical Expertise & Skillsets",
+    "text": "Extensive hands-on expertise in programming, classical machine learning, statistical modeling, feature engineering, and deploying data-driven architectures.",
+    "skills": [
+      {
+        "title": "Python & Data Science Stack",
+        "percentage": "95",
+        "effect": "fade-up",
+        "duration": "500",
+        "delay": "200"
+      },
+      {
+        "title": "Machine Learning (Scikit-Learn, XGBoost)",
+        "percentage": "90",
+        "effect": "fade-up",
+        "duration": "500",
+        "delay": "300"
+      },
+      {
+        "title": "Deep Learning & Neural Networks (LSTM, PyTorch)",
+        "percentage": "80",
+        "effect": "fade-up",
+        "duration": "500",
+        "delay": "400"
+      },
+      {
+        "title": "SQL Databases (MySQL, SQL Server)",
+        "percentage": "85",
+        "effect": "fade-up",
+        "duration": "500",
+        "delay": "500"
+      },
+      {
+        "title": "Web Development (React, Node, Express)",
+        "percentage": "75",
+        "effect": "fade-up",
+        "duration": "500",
+        "delay": "600"
+      },
+      {
+        "title": "Data Visualization (Tableau, Power BI)",
+        "percentage": "80",
+        "effect": "fade-up",
+        "duration": "500",
+        "delay": "700"
+      }
+    ]
+  },
+  "resumeData": {
+    "experienceTitle": "Professional Experience",
+    "experience": [
+      {
+        "title": "Data Science Intern",
+        "duration": "Apr 2026 - Present",
+        "subTitle": "Bloomfield Innovations",
+        "imgLink": "/images/Bloomfield.jpeg",
+        "text": "Built scalable machine learning and analytics solutions for forecasting, risk assessment, and user segmentation using live operational data. Architected AI-powered Library Analytics and Financial Forecasting dashboards with advanced feature engineering, model validation, and predictive modeling techniques."
+      },
+      {
+        "title": "React.js Developer Intern",
+        "duration": "Nov 2024 - Mar 2025",
+        "subTitle": "Starline Infotech",
+        "imgLink": "/images/Starline.png",
+        "text": "Developed scalable web applications and role-based management systems with responsive user interfaces. Optimized workflows and built interactive data visualization components, enhancing operational efficiency and user experience across enterprise solutions."
+      }
+    ],
+    "educationTitle": "Academic Background",
+    "education": [
+      {
+        "title": "Master of Science in Data Science",
+        "duration": "July 2025 - Present",
+        "subTitle": "Marwadi University",
+        "imgLink": "/images/MU.webp",
+        "text": "Focusing on classical Machine Learning, Deep Learning, ETL pipelines, and scalable database systems. Maintaining a strong academic performance with a current CGPA of 8.76."
+      },
+      {
+        "title": "Bachelor of Science in Information Technology",
+        "duration": "July 2022 - June 2025",
+        "subTitle": "Darshan University, Rajkot",
+        "imgLink": "/images/DU.png",
+        "text": "Graduated with First Class Distinction. Built a solid foundation in software development, database administration, and analytical computing. Graduated with a CGPA of 9.31."
+      }
+    ]
+  },
+  "certificates": [
+    {
+      "id": 1,
+      "title": "Data Analytics Job Simulation",
+      "issuer": "Deloitte (Forage)",
+      "date": "April 2026",
+      "imgUrl": "/images/Deloitte.png",
+      "featured": true,
+      "displayOrder": 1
+    },
+    {
+      "id": 2,
+      "title": "Tech Lead – Data Science Club",
+      "issuer": "Marwadi University (Pseudo Committee)",
+      "date": "2025 - Present",
+      "imgUrl": "/images/MU.webp",
+      "featured": true,
+      "displayOrder": 2
+    },
+    {
+      "id": 3,
+      "title": "NCC 'C' Certificate (Grade A)",
+      "issuer": "National Cadet Corps",
+      "date": "2024",
+      "imgUrl": "/images/NCC.jpeg",
+      "featured": false,
+      "displayOrder": 3
+    },
+    {
+      "id": 4,
+      "title": "NCC 'B' Certificate (Grade A)",
+      "issuer": "National Cadet Corps",
+      "date": "2023",
+      "imgUrl": "/images/NCC.jpeg",
+      "featured": false,
+      "displayOrder": 4
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-1",
+      "title": "Road Traffic Accident Severity Prediction",
+      "subTitle": "Predictive Modeling & Classical ML Pipeline",
+      "category": "Machine Learning",
+      "icon": "car",
+      "tags": ["Python", "XGBoost", "SMOTE", "Scikit-Learn"],
+      "imgLink": "/images/portfolio/portfolio1.jpg",
+      "imgLinkLg": "/images/portfolio/portfolio1_lg.jpg",
+      "overview": "Developed a high-performance predictive model to classify traffic accident severity (fatal, severe, minor) from raw road safety datasets.",
+      "methodology": "Engineered features from vehicle, weather, and temporal data on 100K+ records. Used XGBoost and LightGBM with SMOTE to resolve extreme class imbalances.",
+      "results": "Achieved significant accuracy and recall improvements, resulting in a research manuscript accepted for publication at ASCIS 2025.",
+      "githubUrl": "https://github.com/Isha9656?tab=repositories",
+      "liveUrl": "",
+      "images": [],
+      "featured": true
+    },
+    {
+      "id": "proj-2",
+      "title": "Electricity Load Forecasting System",
+      "subTitle": "Deep Learning / LSTM Time-Series System",
+      "category": "Deep Learning",
+      "icon": "lightning",
+      "tags": ["LSTM", "TensorFlow", "Time-Series", "Pandas"],
+      "imgLink": "/images/portfolio/portfolio2.jpg",
+      "imgLinkLg": "/images/portfolio/portfolio2_lg.jpg",
+      "overview": "Created a deep learning-based energy forecasting platform to predict grid demand in real time.",
+      "methodology": "Architected an LSTM-based forecasting model with temporal feature extraction, lag features, and seasonal decomposition.",
+      "results": "Successfully minimized forecasting error across multiple time horizons, offering peak load insights to utility operators.",
+      "githubUrl": "https://github.com/Isha9656?tab=repositories",
+      "liveUrl": "",
+      "images": [],
+      "featured": true
+    },
+    {
+      "id": "proj-3",
+      "title": "Data Science Club Platform",
+      "subTitle": "Full-Stack Portal with RBAC Admin Dashboard",
+      "category": "Full-Stack Web",
+      "icon": "web",
+      "tags": ["React.js", "Node.js", "Express", "MongoDB"],
+      "imgLink": "/images/portfolio/portfolio3.jpg",
+      "imgLinkLg": "/images/portfolio/portfolio3_lg.jpg",
+      "overview": "Built a collaboration portal for university data science students and club members.",
+      "methodology": "Engineered a scalable RESTful API with Node.js/Express, implemented role-based access control, JWT session handling, and MongoDB collections.",
+      "results": "Deployed to production, allowing student members to manage workshops, register for hackathons, and share project resources.",
+      "githubUrl": "https://github.com/Isha9656?tab=repositories",
+      "liveUrl": "",
+      "images": [],
+      "featured": false
+    },
+    {
+      "id": "proj-4",
+      "title": "Machine Learning Codes Repository",
+      "subTitle": "Curated Educational Algorithms & Workflows",
+      "category": "Python Stack",
+      "icon": "code",
+      "tags": ["Python", "Jupyter", "Algorithms", "Numpy"],
+      "imgLink": "/images/portfolio/portfolio4.jpg",
+      "imgLinkLg": "/images/portfolio/portfolio4_lg.jpg",
+      "overview": "Curated an open-source library showcasing foundational machine learning algorithms implemented from scratch.",
+      "methodology": "Built clean notebooks covering preprocessing, EDA, regression, classification, and validation.",
+      "results": "Serves as an educational resource with 15+ repositories demonstrating end-to-end data pipeline principles.",
+      "githubUrl": "https://github.com/Isha9656?tab=repositories",
+      "liveUrl": "",
+      "images": [],
+      "featured": false
+    },
+    {
+      "id": "proj-5",
+      "title": "Crop Prediction",
+      "subTitle": "Agricultural Yield Optimization & Recommendation System",
+      "category": "Machine Learning",
+      "icon": "sprout",
+      "tags": ["Python", "Random Forest", "Flask", "NumPy"],
+      "imgLink": "/images/portfolio/portfolio_crop.jpg",
+      "imgLinkLg": "/images/portfolio/portfolio_crop.jpg",
+      "overview": "Created an AI-driven agricultural planning platform to predict crop yield and suggest ideal crops based on soil and weather parameters.",
+      "methodology": "Trained predictive models on multi-regional soil chemistry and climatological datasets. Integrated an interactive Flask frontend with model inference.",
+      "results": "Provides high-accuracy recommendation maps enabling farmers to select the most profitable and suitable crop varieties for their soil.",
+      "githubUrl": "https://github.com/Isha9656?tab=repositories",
+      "liveUrl": "",
+      "images": [],
+      "featured": true
+    }
+  ],
+  "events": [],
+  "contactData": {
+    "formTitle": "Get In Touch",
+    "title": "Contact Details",
+    "subTitle": "Let's discuss data science and collaboration",
+    "text": "I'm always open to discussing Data Science, Machine Learning, internships, and exciting project opportunities. Feel free to reach out if you'd like to collaborate, connect, or learn more about my work.",
+    "email": "ikakadiya36@gmail.com",
+    "phone": "",
+    "address": "Gujarat, India"
+  },
+  "socialData": [
+    {
+      "icon": "linkedin",
+      "title": "LinkedIn",
+      "link": "https://www.linkedin.com/in/isha-kakadiya/"
+    },
+    {
+      "icon": "github",
+      "title": "GitHub",
+      "link": "https://github.com/Isha9656?tab=repositories"
+    }
+  ]
+}

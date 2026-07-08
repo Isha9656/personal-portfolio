@@ -1,0 +1,143 @@
+@import '../../sass/default/variable';
+
+.st-resume-heading {
+  display: flex;
+  align-items: center;
+}
+
+.st-resume-heading .st-resume-heading-title {
+  margin: 0;
+  margin-left: 30px;
+  font-size: 36px;
+  font-weight: 400;
+}
+
+.st-resume-timeline {
+  position: relative;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  margin-bottom: 30px;
+  display: block;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &::before {
+    position: absolute;
+    content: "";
+    border: 2px solid $base-color4;
+    border-radius: 50%;
+    background-color: $dark-color2;
+    width: 15px;
+    height: 15px;
+    top: 28px;
+    left: -48px;
+    transition: all 0.4s ease;
+    z-index: 10;
+  }
+
+  &:hover {
+    transform: translateX(6px);
+    border-color: rgba(99, 102, 241, 0.25);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35), 0 0 20px rgba(99, 102, 241, 0.05);
+
+    &::before {
+      background-color: $base-color1;
+      border-color: $base-color1;
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    .st-resume-timeline-logo-wrapper {
+      background-color: rgba(255, 255, 255, 0.08);
+      border-color: rgba(99, 102, 241, 0.3);
+
+      .st-resume-timeline-logo {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .st-resume-timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .st-resume-timeline-title-group {
+    flex-grow: 1;
+  }
+
+  .st-resume-timeline-logo-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 6px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+
+    .st-resume-timeline-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 4px;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .st-resume-timeline-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 6px;
+  }
+
+  .st-resume-timeline-duration {
+    font-size: 14px;
+    font-weight: 500;
+    color: #38bdf8;
+    margin-bottom: 6px;
+  }
+
+  .st-resume-timeline-subtitle {
+    font-size: 16px;
+    font-weight: 500;
+    color: $base-color1;
+    margin-bottom: 0;
+  }
+
+  .st-resume-timeline-text p {
+    margin: 0;
+    color: $base-color2;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+}
+
+.st-resume-timeline-wrap {
+  padding-left: 40px;
+  margin-left: 20px;
+  border-left: 1px solid $base-color4;
+}
+
+@media only screen and (max-width:991px) {
+  .st-resume-timeline {
+    margin-bottom: 30px;
+  }
+}

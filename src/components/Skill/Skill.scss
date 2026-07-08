@@ -1,0 +1,122 @@
+@import '../../sass/default/variable';
+
+/* ── Section heading ──────────────────────────────────────── */
+.st-skill-title {
+  font-size: 34px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.25;
+  margin-bottom: 20px;
+}
+
+.st-skill-subtitle {
+  font-size: 15px;
+  color: $base-color2;
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+/* ── Grid container ───────────────────────────────────────── */
+.st-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+/* ── Individual skill card ────────────────────────────────── */
+.st-skill-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.35s ease;
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(99, 102, 241, 0.35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35),
+                0 0 18px rgba(99, 102, 241, 0.08);
+
+    .st-skill-card-icon {
+      color: #38bdf8;
+      transform: scale(1.15) rotate(4deg);
+    }
+  }
+}
+
+/* ── Card top row: icon + title ───────────────────────────── */
+.st-skill-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.st-skill-card-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.st-skill-card-icon {
+  font-size: 22px;
+  color: $base-color1;
+  transition: all 0.35s ease;
+}
+
+.st-skill-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* ── Tech tag pills ───────────────────────────────────────── */
+.st-skill-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.st-skill-tag {
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.18);
+  color: #a5b4fc;
+  padding: 3px 10px;
+  border-radius: 30px;
+  letter-spacing: 0.3px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.18);
+    border-color: rgba(99, 102, 241, 0.4);
+  }
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media screen and (max-width: 991px) {
+  .st-skill-title {
+    font-size: 26px;
+  }
+
+  .st-skill-subtitle {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .st-skills-grid {
+    grid-template-columns: 1fr;
+  }
+}
