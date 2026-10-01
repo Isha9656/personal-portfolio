@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const jsonHeaders = {
   'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const parseOriginFromUrl = (url) => {
   };
 };
 
-exports.handler = async function(event, context) {
+export const handler = async function(event) {
   let body;
   try {
     body = JSON.parse(event.body || "{}");
