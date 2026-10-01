@@ -26,8 +26,8 @@ const CustomCursor = () => {
           },
           '-=0.01',
         );
-      } catch (err) {
-        console.log(err);
+      } catch {
+        // Ignore animation failures; the cursor is decorative.
       }
     };
 

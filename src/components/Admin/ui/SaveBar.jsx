@@ -6,7 +6,7 @@ import { T } from '../adminTheme';
  * Reusable Save button with inline status feedback.
  * Eliminates repeated save-button boilerplate across every section.
  */
-const SaveBar = ({ saving, saveStatus, onSave, label = 'Save Changes' }) => (
+const SaveBar = ({ saving, saveStatus, saveError, onSave, label = 'Save Changes' }) => (
   <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '24px' }}>
     <button
       type="button"
@@ -42,7 +42,7 @@ const SaveBar = ({ saving, saveStatus, onSave, label = 'Save Changes' }) => (
     )}
     {saveStatus === 'error' && (
       <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: T.danger, fontSize: '13px', fontWeight: '500' }}>
-        <Icon icon="mdi:alert-circle" />Save failed — check console
+        <Icon icon="mdi:alert-circle" />{saveError || 'Save failed. Check Firebase configuration and security rules.'}
       </span>
     )}
   </div>

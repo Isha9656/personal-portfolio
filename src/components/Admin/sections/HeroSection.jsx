@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useAdminSection } from '../hooks/useAdminSection';
 import { T, inputStyle, labelStyle, sectionCardStyle, rowStyle } from '../adminTheme';
 import SaveBar from '../ui/SaveBar';
@@ -18,16 +18,20 @@ const Field = ({ label, value, onChange, type = 'text', placeholder }) => {
   );
 };
 
+// Stable selector — extracts the nested homeOneHero from heroData
+const heroSelector = (d) => d.heroData?.homeOneHero;
+
 const HeroSection = () => {
   const { formData, setFormData, saving, saveStatus, save } = useAdminSection(
     'heroData',
-    d => d.heroData?.homeOneHero
+    heroSelector
   );
 
   if (!formData) return <p style={{ color: T.textSub }}>Loading…</p>;
 
   const set = (field, value) => setFormData(prev => ({ ...prev, [field]: value }));
 
+  // Wrap back into the heroData.homeOneHero structure for Firestore
   const handleSave = () => save({ homeOneHero: formData });
 
   return (
@@ -38,7 +42,7 @@ const HeroSection = () => {
       </p>
       <div style={sectionCardStyle}>
         <Field label="Greeting (e.g. Hello, I'm)" value={formData.subTitle} onChange={v => set('subTitle', v)} />
-        <Field label="Name (HTML allowed, e.g. Isha &lt;br /&gt; Kakadiya)" value={formData.title} onChange={v => set('title', v)} />
+        <Field label="Name (HTML allowed, e.g. Isha <br /> Kakadiya)" value={formData.title} onChange={v => set('title', v)} />
         <Field label="Designation / Role" value={formData.designation} onChange={v => set('designation', v)} placeholder="Machine Learning & AI Enthusiast" />
       </div>
       <SaveBar saving={saving} saveStatus={saveStatus} onSave={handleSave} />

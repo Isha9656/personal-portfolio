@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const { user, isAdmin, loading } = useAuth();
+  const { user, isAdmin, loading, authReady } = useAuth();
 
-  if (loading) {
+  if (loading || !authReady) {
     return <div style={{ padding: '50px', textAlign: 'center', fontFamily: 'sans-serif' }}>Checking Authentication...</div>;
   }
 

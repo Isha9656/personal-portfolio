@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#0f172a" rx="16"/>
+  <g transform="translate(20, 25)">
+    <text x="10" y="50" font-family="'Inter', 'Helvetica', 'Arial', sans-serif" font-weight="800" font-size="42" fill="#007cc3" letter-spacing="-1">Infosys</text>
+    <text x="155" y="50" font-family="'Inter', 'Helvetica', 'Arial', sans-serif" font-weight="400" font-size="28" fill="#38bdf8">|</text>
+    <text x="170" y="50" font-family="'Inter', 'Helvetica', 'Arial', sans-serif" font-weight="600" font-size="22" fill="#f8fafc" letter-spacing="0.5">Springboard</text>
+  </g>
+</svg>

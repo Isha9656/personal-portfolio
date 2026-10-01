@@ -13,12 +13,10 @@ const CertificatesSection = ({ data }) => {
   const openModal = (index) => {
     setActiveIndex(index);
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'unset';
   };
 
   const navigateModal = (direction) => {

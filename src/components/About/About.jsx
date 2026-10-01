@@ -2,6 +2,13 @@ import PropTypes from 'prop-types';
 import './About.scss';
 import SectionHeading from '../SectionHeading/SectionHeading';
 
+const buildDetailHref = (item) => {
+  const label = item.title?.toLowerCase();
+  if (label === 'email') return `mailto:${item.info}`;
+  if (label === 'github' || label === 'linkedin') return `https://${String(item.info).replace(/^https?:\/\//, '')}`;
+  return null;
+};
+
 const About = ({ data }) => {
   const { imgLink, title, subtitle, text, details, cvPdf, resumePdfUrl } = data;
   const pdfLink = resumePdfUrl || cvPdf;
@@ -27,14 +34,20 @@ const About = ({ data }) => {
                     <p>{text}</p>
                   </div>
                   <ul className="st-text-block-details st-mp0">
-                    {details.map((item, index) => (
-                      <li key={index}>
-                        <span>{item.title}</span> : <span>{item.info}</span>
-                      </li>
-                    ))}
+                    {details.map((item, index) => {
+                      const href = buildDetailHref(item);
+                      const isExternal = href?.startsWith('https:');
+                      return (
+                        <li key={index}>
+                          <span>{item.title}</span> : {href
+                            ? <a href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>{item.info}</a>
+                            : <span>{item.info}</span>}
+                        </li>
+                      );
+                    })}
                   </ul>
                   <div className="st-text-block-btn">
-                    <a className='st-btn st-style1 st-color1' href={pdfLink} download>Download CV</a>
+                    <a className='st-btn st-style1 st-color1' href={pdfLink} download="Isha_Kakadiya_Resume.pdf">Download résumé</a>
                   </div>
                 </div>
               </div>

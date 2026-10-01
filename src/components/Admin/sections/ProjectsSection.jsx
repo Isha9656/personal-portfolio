@@ -6,15 +6,18 @@ import CloudinaryUploader from '../CloudinaryUploader';
 import SaveBar from '../ui/SaveBar';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
+/** Generate a unique project ID using timestamp + random suffix */
+const generateId = () => `proj-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+
 const emptyProject = () => ({
-  id: `proj-${Date.now()}`,
+  id: generateId(),
   title: '', subTitle: '', category: '', overview: '', methodology: '', results: '',
   tags: [], githubUrl: '', liveUrl: '', imgLink: '', imgLinkLg: '',
   images: [], featured: false,
 });
 
 const ProjectsSection = () => {
-  const { formData: projects, setFormData: setProjects, saving, saveStatus, save } = useAdminSection('projects');
+  const { formData: projects, setFormData: setProjects, saving, saveStatus, saveError, save } = useAdminSection('projects');
   const [expandedIdx, setExpandedIdx] = useState(null);
   const [confirmIdx, setConfirmIdx] = useState(null);
 
@@ -40,6 +43,17 @@ const ProjectsSection = () => {
     setProjects(list);
   };
 
+  const handleSave = () => {
+    // Validate: remove projects with no title (likely accidental empty adds)
+    const valid = projects.filter(p => p.title && p.title.trim() !== '');
+    if (valid.length < projects.length) {
+      const removed = projects.length - valid.length;
+      if (!window.confirm(`${removed} project(s) with empty titles will be removed. Continue?`)) return;
+      setProjects(valid);
+    }
+    save(valid.length < projects.length ? valid : undefined);
+  };
+
   return (
     <div>
       {confirmIdx !== null && (
@@ -59,6 +73,13 @@ const ProjectsSection = () => {
           <Icon icon="mdi:plus" />Add Project
         </button>
       </div>
+
+      {projects.length === 0 && (
+        <div style={{ ...sectionCardStyle, textAlign: 'center', padding: '40px 20px' }}>
+          <Icon icon="mdi:folder-plus-outline" style={{ fontSize: '48px', color: T.textMuted, marginBottom: '12px' }} />
+          <p style={{ color: T.textSub, fontSize: '15px', margin: 0 }}>No projects yet. Click "Add Project" to create your first one.</p>
+        </div>
+      )}
 
       {projects.map((proj, idx) => {
         const expanded = expandedIdx === idx;
@@ -90,8 +111,8 @@ const ProjectsSection = () => {
               <div style={{ padding: '0 20px 20px', borderTop: `1px solid ${T.border}` }}>
                 <div style={{ paddingTop: '18px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                   <div>
-                    <label style={labelStyle}>Title</label>
-                    <input value={proj.title || ''} onChange={e => update(idx, 'title', e.target.value)} style={inputStyle()} />
+                    <label style={labelStyle}>Title *</label>
+                    <input value={proj.title || ''} onChange={e => update(idx, 'title', e.target.value)} style={inputStyle()} placeholder="Project title" />
                   </div>
                   <div>
                     <label style={labelStyle}>Category</label>
@@ -153,6 +174,9 @@ const ProjectsSection = () => {
                     <input value={proj.imgLink || ''} onChange={e => update(idx, 'imgLink', e.target.value)} style={{ ...inputStyle(), flex: 1 }} placeholder="Paste URL or upload →" />
                     <CloudinaryUploader accept="image/*" buttonText="Upload" onUploadSuccess={url => update(idx, 'imgLink', url)} />
                   </div>
+                  {proj.imgLink && (
+                    <img src={proj.imgLink} alt="thumb preview" style={{ marginTop: '10px', height: '60px', objectFit: 'cover', borderRadius: '6px', border: `1px solid ${T.border}` }} />
+                  )}
                 </div>
 
                 <div style={{ marginTop: '14px' }}>
@@ -187,7 +211,7 @@ const ProjectsSection = () => {
         );
       })}
 
-      <SaveBar saving={saving} saveStatus={saveStatus} onSave={() => save()} />
+      <SaveBar saving={saving} saveStatus={saveStatus} saveError={saveError} onSave={handleSave} />
     </div>
   );
 };

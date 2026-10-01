@@ -1,22 +1,22 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Layout from './components/Layout/Layout';
 
-import Home from './pages/Home';
-import Home2 from './pages/Home2';
-import Home3 from './pages/Home3';
-import Home4 from './pages/Home4';
-import Landing from './pages/Landing';
-import Page404 from './components/404/Page404';
-import BlogDetails from './components/Blog/BlogDetails';
-import ProjectDetails from './pages/ProjectDetails';
-import EventDetails from './pages/EventDetails';
+const Home = lazy(() => import('./pages/Home'));
+const Home2 = lazy(() => import('./pages/Home2'));
+const Home3 = lazy(() => import('./pages/Home3'));
+const Home4 = lazy(() => import('./pages/Home4'));
+const Landing = lazy(() => import('./pages/Landing'));
+const Page404 = lazy(() => import('./components/404/Page404'));
+const BlogDetails = lazy(() => import('./components/Blog/BlogDetails'));
+const ProjectDetails = lazy(() => import('./pages/ProjectDetails'));
+const EventDetails = lazy(() => import('./pages/EventDetails'));
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import LandingLayout from './components/Layout/LandingLayout';
 import Layout2 from './components/Layout/Layout2';
-import Admin from './pages/Admin';
-import Login from './pages/Login';
+const Admin = lazy(() => import('./pages/Admin'));
+const Login = lazy(() => import('./pages/Login'));
 import ProtectedRoute from './components/Admin/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
@@ -26,9 +26,10 @@ function App() {
   }, []);
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+    <BrowserRouter>
+      <AuthProvider>
+      <Suspense fallback={<div className="route-loading" role="status">Loading page…</div>}>
+      <Routes>
           <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="home-v3" element={<Home3 />} />
@@ -44,11 +45,12 @@ function App() {
         <Route path="/landing" element={<LandingLayout />}>
           <Route index element={<Landing />} />
         </Route>
-        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+        <Route path="/admin/*" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      </Suspense>
+      </AuthProvider>
     </BrowserRouter>
-    </AuthProvider>
   );
 }
 

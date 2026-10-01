@@ -17,20 +17,27 @@ const getBadgeData = (title, issuer) => {
 };
 
 const CertificateCard = ({ data, onClick }) => {
-  const { title, issuer, date, imgUrl, effect, duration, delay } = data;
+  const { title, issuer, date, imgUrl, pdfUrl, orgLogo, orgImg } = data;
   const badge = getBadgeData(title, issuer);
+  
+  // Organization logo displayed outside
+  const isImgPdf = (imgUrl || '').toLowerCase().endsWith('.pdf') || (imgUrl || '').includes('application/pdf');
+  const logoUrl = orgLogo || orgImg || (!isImgPdf ? imgUrl : '');
 
   return (
-    <div className="st-cert-card-premium" onClick={onClick}>
+    <button type="button" className="st-cert-card-premium" onClick={onClick} aria-label={`View certificate: ${title}`}>
       <div className={`st-cert-badge ${badge.className}`}>
         {badge.text}
       </div>
       
       <div className="st-cert-card-img-wrapper">
-        {imgUrl ? (
-          <img src={imgUrl} alt={title} />
+        {logoUrl ? (
+          <img src={logoUrl} alt={issuer || title} />
         ) : (
-          <div className="st-cert-placeholder">🏆</div>
+          <div className="st-cert-placeholder" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '38px' }}>🏢</span>
+            <span style={{ fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>{issuer || 'Certificate'}</span>
+          </div>
         )}
       </div>
       
@@ -38,10 +45,15 @@ const CertificateCard = ({ data, onClick }) => {
         <h2 className="st-cert-title">{title}</h2>
         {issuer && <p className="st-cert-issuer">{issuer}</p>}
         {date && <p className="st-cert-date">{date}</p>}
+        <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '6px', color: '#818cf8', fontSize: '13px', fontWeight: '600' }}>
+          <span>View Certificate & Details</span>
+          <span>→</span>
+        </div>
       </div>
-    </div>
+    </button>
   );
 };
+
 
 CertificateCard.propTypes = {
   data: PropTypes.object,

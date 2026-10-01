@@ -2,7 +2,7 @@
 .st-page-not-found {
   height: calc(100vh - 80px);
 
-  h3 {
+  h1 {
     font-size: 120px;
     color: $dark-color3;
     text-shadow:
@@ -12,7 +12,7 @@
       -1px -1px 0 $base-color1;
   }
 
-  h4 {
+  h2 {
     color: $base-color1;
   }
 
@@ -20,4 +20,11 @@
     text-transform: uppercase;
     margin-bottom: 50px;
   }
+}
+.st-page-not-found-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
 }

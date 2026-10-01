@@ -6,7 +6,7 @@ import CloudinaryUploader from '../CloudinaryUploader';
 import SaveBar from '../ui/SaveBar';
 import ConfirmDialog from '../ui/ConfirmDialog';
 
-const emptyEntry = () => ({ title: '', duration: '', subTitle: '', text: '', imgLink: '' });
+const emptyEntry = () => ({ title: '', duration: '', subTitle: '', text: '', imgLink: '', extraDetails: '', certificateUrl: '' });
 
 const EntryEditor = ({ entry, onChange, onDelete }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);

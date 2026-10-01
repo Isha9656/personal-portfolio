@@ -27,8 +27,13 @@ const UploadField = ({ label, value, onChange, accept = 'image/*' }) => (
       <input value={value || ''} onChange={e => onChange(e.target.value)} style={{ ...inputStyle(), flex: 1 }} placeholder="Paste URL or upload →" />
       <CloudinaryUploader accept={accept} buttonText="Upload" onUploadSuccess={url => onChange(url)} />
     </div>
-    {value && accept.includes('image') && (
+    {value && accept.includes('image') && !value.endsWith('.pdf') && (
       <img src={value} alt="preview" style={{ marginTop: '10px', height: '80px', borderRadius: '8px', objectFit: 'cover', border: `1px solid ${T.border}` }} />
+    )}
+    {value && (accept.includes('pdf') || value.endsWith('.pdf')) && (
+      <p style={{ color: '#38bdf8', fontSize: '12px', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        📄 PDF Document Attached: {value}
+      </p>
     )}
   </div>
 );

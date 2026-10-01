@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AdminSidebar from './AdminSidebar';
 import { T } from './adminTheme';
 
@@ -27,8 +28,17 @@ const SECTIONS = {
 };
 
 const AdminLayout = () => {
-  const [activeSection, setActiveSection] = useState('overview');
+  const location = useLocation();
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const requestedSection = location.pathname.replace(/\/+$/, '').split('/')[2] || 'overview';
+  const activeSection = SECTIONS[requestedSection] ? requestedSection : 'overview';
+
+  useEffect(() => {
+    if (!SECTIONS[requestedSection]) navigate('/admin', { replace: true });
+  }, [navigate, requestedSection]);
+
+  const setActiveSection = (section) => navigate(section === 'overview' ? '/admin' : `/admin/${section}`);
 
   return (
     <div style={{

@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Portfolio collection
+    match /portfolio/{document=**} {
+      // Anyone can view the portfolio document (public access for portfolio website visitors)
+      allow read: if true;
+      
+      // Only authenticated users with authorized admin emails can write/modify portfolio data
+      allow write: if request.auth != null && 
+        (
+          request.auth.token.email.lower() in [
+          'ishakakdiya2005@gmail.com',
+          'ishakakadiya2005@gmail.com',
+          'ikakadiya36@gmail.com'
+        ]
+        );
+    }
+  }
+}
+

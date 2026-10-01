@@ -11,6 +11,11 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  appearance: none;
 
   &:hover {
     transform: translateY(-8px) scale(1.04);

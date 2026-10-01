@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import './Portfolio.scss';
 import SectionHeading from '../SectionHeading/SectionHeading';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SinglePortfolio from './SinglePortfolio';
 
 const PortfolioSection = ({ data }) => {
@@ -14,6 +14,13 @@ const PortfolioSection = ({ data }) => {
   );
 
   const [showLoadMore, setShowLoadMore] = useState(portfolioItems.length > itemsPerPage);
+
+  useEffect(() => {
+    if (data) {
+      setVisibleItems(data.slice(0, itemsPerPage));
+      setShowLoadMore(data.length > itemsPerPage);
+    }
+  }, [data]);
 
   const loadMoreItems = () => {
     const currentLength = visibleItems.length;

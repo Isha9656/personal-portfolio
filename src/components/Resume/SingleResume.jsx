@@ -7,20 +7,13 @@ const SingleResume = ({ element }) => {
   const isExpandable = !!(certificateUrl || extraDetails);
 
   return (
-    <div
-      className={`st-resume-timeline ${isExpandable ? 'st-resume-interactive' : ''}`}
-      onClick={() => isExpandable && setIsExpanded(!isExpanded)}
-      style={{
-        cursor: isExpandable ? 'pointer' : 'default',
-        transition: 'all 0.3s ease',
-      }}
-    >
+    <div className={`st-resume-timeline ${isExpandable ? 'st-resume-interactive' : ''}`}>
       <div className="st-resume-timeline-header">
         <div className="st-resume-timeline-title-group">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <h3 className="st-resume-timeline-title" style={{ margin: 0 }}>{title}</h3>
             {isExpandable && (
-              <span style={{
+              <button type="button" className="resume-details-toggle" aria-expanded={isExpanded} aria-controls={`resume-details-${title.replace(/[^a-z0-9]+/gi, '-')}`} onClick={() => setIsExpanded((expanded) => !expanded)} style={{
                 fontSize: '11px',
                 fontWeight: '600',
                 textTransform: 'uppercase',
@@ -36,7 +29,7 @@ const SingleResume = ({ element }) => {
               }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M22 12H12M12 2a10 10 0 0 1 10 10M12 22a10 10 0 0 1-10-10"/></svg>
                 {isExpanded ? 'Click to collapse' : 'Certificate details'}
-              </span>
+              </button>
             )}
           </div>
           <div className="st-resume-timeline-duration">{duration}</div>
@@ -54,7 +47,7 @@ const SingleResume = ({ element }) => {
       </div>
 
       {isExpandable && (
-        <div style={{
+        <div id={`resume-details-${title.replace(/[^a-z0-9]+/gi, '-')}`} hidden={!isExpanded} style={{
           maxHeight: isExpanded ? '500px' : '0px',
           overflow: 'hidden',
           transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -63,7 +56,6 @@ const SingleResume = ({ element }) => {
           paddingTop: isExpanded ? '16px' : '0px',
           borderTop: isExpanded ? '1px solid rgba(255, 255, 255, 0.08)' : 'none',
         }}
-        onClick={(e) => e.stopPropagation()} // Stop propagation when clicking inside the expanded container
         >
           {extraDetails && (
             <div style={{

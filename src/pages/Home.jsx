@@ -9,10 +9,19 @@ import Contact from "../components/Contact/Contact";
 import PortfolioSection from '../components/Protfolio/PortfolioSection';
 import Hero from '../components/Hero/Hero';
 import { useData } from '../context/DataContext';
+import { updatePageMetadata } from '../utils/projectAssets';
 
 const Home = () => {
   const { data, loading, error } = useData();
   const location = useLocation();
+
+  useEffect(() => {
+    updatePageMetadata({
+      title: 'Isha Kakadiya | Data Science & Machine Learning',
+      description: 'M.Sc. Data Science student with experience building ML pipelines, predictive analytics solutions, forecasting tools, and data-driven applications.',
+      url: `${window.location.origin}/`,
+    });
+  }, []);
 
   useEffect(() => {
     if (!loading && location.hash) {
@@ -33,13 +42,13 @@ const Home = () => {
   return (
     <>
       <div className="st-height-b80 st-height-lg-b80"></div>
-      <Hero data={heroData.homeOneHero} socialData={socialData} />
+      <Hero data={heroData.homeOneHero} socialData={socialData} aboutData={aboutData} />
       <About data={aboutData} data-aos="fade-right" />
       <Skill data={skillData} data-aos="fade-right" />
       <Resume data={resumeData} />
       <CertificatesSection data={certificates} data-aos="fade-right" />
       <PortfolioSection data={projects} data-aos="fade-right" />
-      <BlogSection data={events} data-aos="fade-right" />
+      {Array.isArray(events) && events.length > 0 && <BlogSection data={events} data-aos="fade-right" />}
       <Contact data={contactData} socialData={socialData} data-aos="fade-right" />
     </>
   )

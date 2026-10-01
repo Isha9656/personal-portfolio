@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import { isProjectRepository, isVerifiedProjectImage } from '../../utils/projectAssets';
 
 const SinglePortfolio = ({ data }) => {
   const { id, title, subTitle, category, icon, tags, githubUrl, overview, imgLink } = data;
+  const repositoryUrl = isProjectRepository(githubUrl) ? githubUrl : null;
+  const projectImage = isVerifiedProjectImage(imgLink) ? imgLink : null;
 
   // Select icon name based on the icon key
   const getIconName = (iconType) => {
@@ -12,18 +15,20 @@ const SinglePortfolio = ({ data }) => {
       case 'lightning': return 'mdi:lightning-bolt';
       case 'web': return 'mdi:web';
       case 'code': return 'mdi:code-braces';
+      case 'database': return 'mdi:database';
+      case 'chart': return 'mdi:chart-line';
       default: return 'mdi:briefcase';
     }
   };
 
   return (
     <div className="col-lg-4 col-md-6" style={{ marginBottom: '30px' }}>
-      <div className="st-portfolio-card">
+      <article className="st-portfolio-card">
         {/* Card Header with Logo or Tech Icon */}
         <div className="st-portfolio-card-header">
-          {imgLink ? (
+          {projectImage ? (
             <div className="st-portfolio-card-logo-container">
-              <img src={imgLink} alt={title} className="st-portfolio-card-logo" />
+              <img src={projectImage} alt={title} className="st-portfolio-card-logo" loading="lazy" />
             </div>
           ) : (
             <div className="st-portfolio-card-icon-wrapper">
@@ -54,13 +59,19 @@ const SinglePortfolio = ({ data }) => {
           <Link to={`/project/${id}`} className="st-portfolio-card-btn st-portfolio-btn-details">
             Case Study <Icon icon="mdi:arrow-right" />
           </Link>
-          {githubUrl && (
-            <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="st-portfolio-card-btn st-portfolio-btn-github" title="GitHub Repo">
+          {repositoryUrl && (
+            <a 
+              href={repositoryUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="st-portfolio-card-btn st-portfolio-btn-github" 
+              title="GitHub Repo"
+            >
               <Icon icon="mdi:github" /> Code
             </a>
           )}
         </div>
-      </div>
+      </article>
     </div>
   );
 };

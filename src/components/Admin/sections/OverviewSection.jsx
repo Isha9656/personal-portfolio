@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { useData } from '../../../context/DataContext';
 import { T } from '../adminTheme';
+import { useAuth } from '../../../context/AuthContext';
 import localData from '../../../Data.json';
 
 const StatCard = ({ icon, label, value, color }) => (
@@ -17,7 +18,7 @@ const StatCard = ({ icon, label, value, color }) => (
 );
 
 const OverviewSection = () => {
-  const { data, updateData } = useData();
+  const { data, dataSource, updateData } = useData();
   const [seeding, setSeeding] = useState(false);
   const [seedSuccess, setSeedSuccess] = useState(false);
 
@@ -52,9 +53,25 @@ const OverviewSection = () => {
   return (
     <div>
       <h2 style={{ color: T.text, fontSize: '22px', fontWeight: '700', margin: '0 0 8px' }}>Dashboard Overview</h2>
-      <p style={{ color: T.textSub, margin: '0 0 30px', fontSize: '14px' }}>
+      <p style={{ color: T.textSub, margin: '0 0 20px', fontSize: '14px' }}>
         Welcome back! Here's a summary of your portfolio content.
       </p>
+
+      {/* Data source indicator */}
+      <div style={{
+        display: 'inline-flex', alignItems: 'center', gap: '8px',
+        padding: '6px 14px', borderRadius: '8px', marginBottom: '24px',
+        background: dataSource === 'firestore' ? T.successBg : 'rgba(251,191,36,0.1)',
+        border: `1px solid ${dataSource === 'firestore' ? T.successBorder : 'rgba(251,191,36,0.25)'}`,
+      }}>
+        <Icon
+          icon={dataSource === 'firestore' ? 'mdi:cloud-check' : 'mdi:file-document'}
+          style={{ fontSize: '16px', color: dataSource === 'firestore' ? T.success : '#fbbf24' }}
+        />
+        <span style={{ fontSize: '12px', fontWeight: '600', color: dataSource === 'firestore' ? T.success : '#fbbf24' }}>
+          {dataSource === 'firestore' ? 'Connected to Firestore' : 'Using Local Data (offline)'}
+        </span>
+      </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px', marginBottom: '32px' }}>
         {stats.map(s => <StatCard key={s.label} {...s} />)}
@@ -67,7 +84,7 @@ const OverviewSection = () => {
           <h3 style={{ color: T.text, fontWeight: '600', fontSize: '16px', margin: 0 }}>Sync Local Data to Firebase</h3>
         </div>
         <p style={{ color: T.textSub, fontSize: '14px', lineHeight: 1.6, margin: '0 0 20px' }}>
-          First-time setup? You can upload all your existing static portfolio data (from <code>Data.json</code>) directly to your new Firestore database with one click.
+          First-time setup? You can upload all your existing static portfolio data (from <code>Data.json</code>) directly to your Firestore database with one click.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <button
@@ -112,7 +129,7 @@ const OverviewSection = () => {
         <ul style={{ color: T.textSub, fontSize: '14px', lineHeight: 1.8, paddingLeft: '20px', margin: 0 }}>
           <li>Use the sidebar to navigate between content sections.</li>
           <li>Each section has its own <strong style={{ color: T.text }}>Save Changes</strong> button — changes are not auto-saved.</li>
-          <li>Images upload directly to <strong style={{ color: T.text }}>Cloudinary</strong> via the Upload buttons.</li>
+          <li>Images upload to <strong style={{ color: T.text }}>Firebase Storage</strong> when signed in with Google. You can also paste external image URLs directly.</li>
           <li>Your portfolio updates live as soon as you save to Firestore.</li>
           <li>Use the <strong style={{ color: T.text }}>View Portfolio</strong> link in the sidebar to see live changes.</li>
         </ul>

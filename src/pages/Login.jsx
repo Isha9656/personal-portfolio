@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { user, isAdmin, loading: authLoading, authError, loginWithGoogle } = useAuth();
+  const { user, isAdmin, loading: authLoading, authReady, authError, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,22 +14,15 @@ const Login = () => {
   }, [user, isAdmin, authLoading, navigate]);
 
   useEffect(() => {
-    console.log("Login component mounted. Ready for user click events!");
-  }, []);
-
-  useEffect(() => {
     if (authError) { setError(authError); setLoading(false); }
   }, [authError]);
 
   const handleGoogleLogin = async () => {
-    console.warn("handleGoogleLogin: Clicked! Initiating Google Sign-In popup...");
     try {
       setError('');
       setLoading(true);
-      const res = await loginWithGoogle();
-      console.warn("handleGoogleLogin: Google popup login resolved successfully! User details:", res.user);
+      await loginWithGoogle();
     } catch (err) {
-      console.error("handleGoogleLogin: Detailed sign-in error caught:", err);
       if (err.code !== 'auth/popup-closed-by-user') {
         setError(`Sign-in failed: ${err.message || err.code || 'Please try again'}`);
       }
@@ -88,7 +81,7 @@ const Login = () => {
         )}
 
         {/* Google button */}
-        <GoogleButton onClick={handleGoogleLogin} loading={loading} />
+        <GoogleButton onClick={handleGoogleLogin} loading={loading || !authReady} />
 
         {/* Security note */}
         <div style={{ marginTop: '28px', padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>

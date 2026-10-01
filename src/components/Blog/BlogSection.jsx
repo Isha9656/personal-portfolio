@@ -4,7 +4,7 @@ import SectionHeading from '../SectionHeading/SectionHeading';
 import Carousel from '../Slider/Carousel';
 
 const Blog = ({ data }) => {
-  if (!data) return null;
+  if (!Array.isArray(data) || data.length === 0) return null;
 
   const carouselData = {
     useFor: "blog",

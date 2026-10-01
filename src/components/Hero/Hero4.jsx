@@ -7,7 +7,6 @@ import SocialLinks2 from '../SocialLinks/SocialLinks2';
 
 const Hero4 = ({ data, socialData }) => {
   const { title, text, imgAuthor, bgImgLink } = data;
-  console.log(title, text, imgAuthor, bgImgLink);
   return (
     <section id="home"
       className="st-hero st-style2 st-bg st-dynamic-bg st-ripple-version" style={{ backgroundImage: `url(${bgImgLink})` }}>
