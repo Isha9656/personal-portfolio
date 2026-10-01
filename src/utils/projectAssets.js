@@ -4,7 +4,7 @@ export const isVerifiedProjectImage = (url) => Boolean(url) && !samplePortfolioA
 
 export const isProjectRepository = (url) => /^https:\/\/github\.com\/[^/]+\/[^/?#]+\/?$/.test(url || '');
 
-export const updatePageMetadata = ({ title, description, url = window.location.href }) => {
+export const updatePageMetadata = ({ title, description, url = window.location.href, image }) => {
   document.title = title;
   const setMeta = (selector, attribute, key, content) => {
     let element = document.head.querySelector(`${selector}[${attribute}="${key}"]`);
@@ -19,8 +19,10 @@ export const updatePageMetadata = ({ title, description, url = window.location.h
   setMeta('meta', 'property', 'og:title', title);
   setMeta('meta', 'property', 'og:description', description);
   setMeta('meta', 'property', 'og:url', url);
+  if (image) setMeta('meta', 'property', 'og:image', image);
   setMeta('meta', 'name', 'twitter:title', title);
   setMeta('meta', 'name', 'twitter:description', description);
+  if (image) setMeta('meta', 'name', 'twitter:image', image);
   let canonical = document.head.querySelector('link[rel="canonical"]');
   if (!canonical) {
     canonical = document.createElement('link');

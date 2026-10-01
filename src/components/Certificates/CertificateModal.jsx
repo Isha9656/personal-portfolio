@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { isPdfAsset } from '../../utils/media';
 import './CertificateModal.scss';
 
 const CertificateModal = ({ data, activeIndex, onClose, onNavigate }) => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
+  const closeRef = useRef(null);
+  const contentRef = useRef(null);
 
   const minSwipeDistance = 50;
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement;
     document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         onClose();
@@ -18,6 +22,13 @@ const CertificateModal = ({ data, activeIndex, onClose, onNavigate }) => {
         onNavigate('prev');
       } else if (e.key === 'ArrowRight') {
         onNavigate('next');
+      } else if (e.key === 'Tab' && contentRef.current) {
+        const focusable = [...contentRef.current.querySelectorAll('a[href], button:not(:disabled), iframe, object')].filter((item) => item.getClientRects().length > 0);
+        if (!focusable.length) { e.preventDefault(); closeRef.current?.focus(); return; }
+        const first = closeRef.current;
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     };
 
@@ -25,6 +36,7 @@ const CertificateModal = ({ data, activeIndex, onClose, onNavigate }) => {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
     };
   }, [onClose, onNavigate]);
 
@@ -63,8 +75,8 @@ const CertificateModal = ({ data, activeIndex, onClose, onNavigate }) => {
   const logoUrl = currentCert.orgLogo || currentCert.orgImg || '';
 
   return (
-    <div className="st-cert-modal-overlay" role="dialog" aria-modal="true" aria-label={currentCert.title} onClick={onClose}>
-      <button className="st-cert-modal-close" type="button" aria-label="Close certificate details" onClick={onClose}>&times;</button>
+    <div className="st-cert-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="certificate-modal-title" onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+      <button ref={closeRef} className="st-cert-modal-close" type="button" aria-label="Close certificate details" onClick={onClose}>&times;</button>
       
       <button 
         type="button" aria-label="Previous certificate" className="st-cert-modal-nav st-cert-modal-prev" 
@@ -74,7 +86,8 @@ const CertificateModal = ({ data, activeIndex, onClose, onNavigate }) => {
       </button>
 
       <div 
-        className="st-cert-modal-content" 
+        className="st-cert-modal-content"
+        ref={contentRef}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -111,7 +124,7 @@ const CertificateModal = ({ data, activeIndex, onClose, onNavigate }) => {
               <img src={logoUrl} alt={currentCert.issuer} style={{ height: '45px', objectFit: 'contain', background: 'rgba(255,255,255,0.06)', padding: '6px 14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }} />
             </div>
           )}
-          <h3>{currentCert.title}</h3>
+          <h3 id="certificate-modal-title">{currentCert.title}</h3>
           {currentCert.issuer && <p className="issuer" style={{ color: '#38bdf8', fontWeight: '600' }}>{currentCert.issuer}</p>}
           {currentCert.date && <p className="date" style={{ color: '#94a3b8', fontSize: '13px' }}>{currentCert.date}</p>}
           

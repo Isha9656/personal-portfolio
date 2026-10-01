@@ -1,105 +1,110 @@
 import { Link, useLocation } from 'react-router-dom';
-import './Header.scss';
-import { Link as ScrollLink } from 'react-scroll';
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useData } from '../../context/DataContext';
+import './Header.scss';
+
+const navigation = [
+  { section: 'portfolio', label: 'Work' },
+  { section: 'skills', label: 'Skills' },
+  { section: 'experience', label: 'Experience' },
+  { section: 'about', label: 'About' },
+  { section: 'certificates', label: 'Credentials' },
+  { resume: true, label: 'Resume' },
+];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileToggle, setMobileToggle] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const menuRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const firstLinkRef = useRef(null);
   const location = useLocation();
+  const { data } = useData();
   const isHomePage = location.pathname === '/';
-
-  const handleToggleMenu = () => {
-    setMobileToggle((open) => !open);
-  }
+  const resumeUrl = data?.aboutData?.resumePdfUrl || data?.aboutData?.cvPdf || '/images/Isha_Kakadiya_RESUME.pdf';
 
   useEffect(() => {
-    document.body.style.overflow = mobileToggle ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileToggle]);
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') setMobileToggle(false);
-    };
-    const handlePointerDown = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) setMobileToggle(false);
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('pointerdown', handlePointerDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('pointerdown', handlePointerDown);
-    };
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const renderNavLink = (to, text) => {
-    if (isHomePage) {
-      return <ScrollLink to={to} spy={true} smooth={true} offset={-80} duration={500} onClick={() => setMobileToggle(false)}>{text}</ScrollLink>;
-    } else {
-      return <Link to={to === 'home' ? '/' : `/#${to}`} onClick={() => setMobileToggle(false)}>{text}</Link>;
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => (window.matchMedia('(max-width: 760px)').matches ? mobileMenuRef.current?.querySelector('a') : firstLinkRef.current)?.focus());
     }
-  };
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [menuOpen]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape' && menuOpen) {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+      if (event.key === 'Tab' && menuOpen && menuRef.current) {
+        const focusable = [...(mobileMenuRef.current?.querySelectorAll('a[href]') || menuRef.current?.querySelectorAll('a[href]') || [])].filter((item) => item.getClientRects().length > 0);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
       }
     };
-
-    window.addEventListener('scroll', handleScroll);
-
+    const closeOutside = (event) => { if (menuRef.current && !menuRef.current.contains(event.target) && !mobileMenuRef.current?.contains(event.target)) setMenuOpen(false); };
+    document.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('pointerdown', closeOutside);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('pointerdown', closeOutside);
     };
-  }, []);
+  }, [menuOpen]);
 
+  useEffect(() => {
+    if (!isHomePage || !('IntersectionObserver' in window)) return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActiveSection(visible.target.id);
+    }, { rootMargin: '-25% 0px -55% 0px', threshold: [0, .2, .5] });
+    ['home', 'portfolio', 'skills', 'experience', 'about', 'certificates', 'contact'].forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+    return () => observer.disconnect();
+  }, [isHomePage, data]);
+
+  const navHref = (section) => isHomePage ? `#${section}` : `/#${section}`;
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className={`st-site-header st-sticky-header st-style1 ${isScrolled ? 'st-sticky-active' : ''}`}>
-      <div className="st-main-header">
-        <div className="container-fluid" style={{ padding: '0 40px' }}>
-          <div className="st-main-header-in">
-            <div className="st-main-header-left">
-              <Link className="st-site-branding" to='/' id="hero" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                <span style={{ fontSize: '32px', fontWeight: '300', color: '#6366f1', fontFamily: 'monospace', lineHeight: 1 }}>{"{"}</span>
-                <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1, fontFamily: '"Poppins", sans-serif' }}>
-                  <span style={{ fontWeight: '800', fontSize: '14px', letterSpacing: '0.15em', color: '#ffffff' }}>ISHA</span>
-                  <span style={{ fontWeight: '800', fontSize: '14px', letterSpacing: '0.15em', color: '#ffffff' }}>KAKADIYA</span>
-                </div>
-                <span style={{ fontSize: '32px', fontWeight: '300', color: '#6366f1', fontFamily: 'monospace', lineHeight: 1 }}>{"}"}</span>
-              </Link>
-            </div>
-            <div className="st-main-header-right" style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-              <div className="st-nav" ref={menuRef}>
-                <ul id="primary-navigation" className="st-nav-list st-onepage-nav" style={{ display: `${mobileToggle ? 'block' : 'none'}` }}>
-                  <li>{renderNavLink('home', 'Home')}</li>
-                  <li>{renderNavLink('about', 'About')}</li>
-                  <li>{renderNavLink('resume', 'Resume')}</li>
-                  <li>{renderNavLink('certificates', 'Certificates')}</li>
-                  <li>{renderNavLink('portfolio', 'Projects')}</li>
-                  <li>{renderNavLink('contact', 'Contact')}</li>
-                </ul>
-                <button className={`st-munu-toggle ${mobileToggle ? "st-toggle-active" : ""}`} type="button" onClick={handleToggleMenu} aria-label={mobileToggle ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={mobileToggle} aria-controls="primary-navigation">
-                  <span></span>
-                </button>
-                <div className="sp-phone" style={{ textDecoration: 'none' }}>
-                  <svg viewBox="0 0 24 24" style={{ fill: '#ffffff', width: '16px', height: '16px' }}>
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                  </svg>
-                  <a href="mailto:ikakadiya36@gmail.com" className="sp-phone-no" style={{ textDecoration: 'none', color: '#6366f1' }}>ikakadiya36@gmail.com</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <header className={`st-site-header st-sticky-header lab-site-header${isScrolled ? ' is-scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
+      <div className="lab-header-inner">
+        <Link className="lab-wordmark" to="/" aria-label="Isha Kakadiya, home" onClick={closeMenu}>
+          <span className="lab-wordmark-symbol">i<span>.</span></span>
+          <span className="lab-wordmark-name">ISHA KAKADIYA<small>DATA SCIENCE · APPLIED AI</small></span>
+        </Link>
+        <nav className="lab-nav" aria-label="Main navigation" ref={menuRef}>
+          <ul className="lab-nav-list" id="primary-navigation">
+            {navigation.map((item, index) => <li key={item.section || 'resume'} style={{ '--nav-index': index }}><a ref={index === 0 ? firstLinkRef : undefined} className={isHomePage && activeSection === item.section ? 'is-active' : ''} href={item.resume ? resumeUrl : navHref(item.section)} target={item.resume ? '_blank' : undefined} rel={item.resume ? 'noreferrer' : undefined} onClick={closeMenu}><span>0{index + 1}</span>{item.label}</a></li>)}
+          </ul>
+          <a className="lab-nav-contact" href={navHref('contact')}>Let’s talk <span>↗</span></a>
+          <button ref={menuButtonRef} className={`lab-menu-toggle${menuOpen ? ' is-open' : ''}`} type="button" onClick={() => setMenuOpen((open) => !open)} aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}>
+            <span /><span />
+          </button>
+        </nav>
       </div>
-    </header >
-  )
-}
+      {menuOpen && createPortal(<nav className="lab-mobile-menu" id="mobile-navigation" aria-label="Mobile navigation" ref={mobileMenuRef}>
+        <ul>{navigation.map((item, index) => <li key={item.section || 'resume'} style={{ '--nav-index': index }}><a href={item.resume ? resumeUrl : navHref(item.section)} target={item.resume ? '_blank' : undefined} rel={item.resume ? 'noreferrer' : undefined} onClick={closeMenu}><span>0{index + 1}</span>{item.label}<b aria-hidden="true">↗</b></a></li>)}
+          <li><a href={navHref('contact')} onClick={closeMenu}><span>07</span>Let’s talk<b aria-hidden="true">↗</b></a></li></ul>
+      </nav>, document.body)}
+    </header>
+  );
+};
 
 export default Header;
