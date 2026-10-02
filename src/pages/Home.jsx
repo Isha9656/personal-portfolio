@@ -179,7 +179,6 @@ function Home() {
         <div className="lab-container">
           <SectionIntro index="01" eyebrow="A curious mind, a practical approach" title={about.subtitle || 'From messy data to meaningful direction.'} description="I like the part where a difficult question becomes a clear next step." />
           <div className="lab-about-grid">
-            <Reveal className="lab-about-portrait-wrap"><div className="lab-about-portrait-frame"><img src={about.imgLink || hero.imgLink} alt="Isha Kakadiya" loading="lazy" /><span className="lab-portrait-stamp">ISHA<br />KAKADIYA</span></div><p className="lab-photo-caption">{about.details?.find((item) => item.title?.toLowerCase() === 'from')?.info || 'Gujarat, India'} <span>·</span> Data science, with intent.</p></Reveal>
             <Reveal className="lab-about-story" delay={0.12}>
               <p className="lab-story-mark">“</p><p className="lab-about-lede">{about.text}</p>
               <p className="lab-about-detail">My work moves between data engineering, machine learning, and thoughtful product interfaces. I care about building things people can understand, trust, and use.</p>
